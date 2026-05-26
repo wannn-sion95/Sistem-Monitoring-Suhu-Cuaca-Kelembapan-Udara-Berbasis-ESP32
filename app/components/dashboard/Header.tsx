@@ -112,21 +112,6 @@ export default function Header({
             </span>
           </div>
 
-          {/* Tombol Toggle Tema */}
-          {mounted && (
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="group flex h-8 w-8 items-center justify-center rounded-lg bg-slate-200/60 dark:bg-slate-800/60 ring-1 ring-slate-300 dark:ring-slate-700/50 text-slate-500 dark:text-slate-400 hover:bg-slate-300 dark:hover:bg-slate-700/60 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-4 w-4" />
-              ) : (
-                <Moon className="h-4 w-4" />
-              )}
-            </button>
-          )}
-
           <button
             onClick={onRefresh}
             className="group flex h-8 w-8 items-center justify-center rounded-lg bg-slate-200/60 dark:bg-slate-800/60 ring-1 ring-slate-300 dark:ring-slate-700/50 text-slate-500 dark:text-slate-400 hover:bg-slate-300 dark:hover:bg-slate-700/60 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200"
