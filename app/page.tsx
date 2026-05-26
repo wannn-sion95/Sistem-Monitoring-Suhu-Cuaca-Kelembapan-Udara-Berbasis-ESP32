@@ -1,65 +1,155 @@
-import Image from "next/image";
+/* eslint-disable react-hooks/refs */
+"use client";
 
-export default function Home() {
+import { motion, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
+
+// ── Components ────────────────────────────────────────────────────────────────
+import Header from "./components/dashboard/Header";
+import StatusCard from "./components/dashboard/StatusCard";
+import TemperatureCard from "./components/dashboard/TemperatureCard";
+import HumidityCard from "./components/dashboard/HumidityCard";
+import AnalyticsCard from "./components/dashboard/AnalyticsCard";
+import Footer from "./components/dashboard/Footer";
+import ErrorBanner from "./components/ui/ErrorBanner";
+
+// ── Hook ──────────────────────────────────────────────────────────────────────
+import { useWeatherData } from "@/hooks/useWeatherData";
+
+// ─── Framer Motion Variants ───────────────────────────────────────────────────
+
+/** Grid wrapper: stagger children in */
+const gridVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.15,
+    },
+  },
+};
+
+/** Each card: fade + slide up */
+const cardVariants = {
+  hidden: { opacity: 0, y: 28, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring" as const,
+      stiffness: 280,
+      damping: 26,
+    },
+  },
+};
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
+export default function DashboardPage() {
+  const { data, history, isLoading, isError, lastUpdated, refresh } =
+    useWeatherData();
+
+  // Keep a one-step-back snapshot for trend arrows
+  const prevDataRef = useRef<{ suhu: number; kelembapan: number } | null>(null);
+  const previousData = prevDataRef.current;
+  if (data) {
+    prevDataRef.current = { suhu: data.suhu, kelembapan: data.kelembapan };
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="flex min-h-screen flex-col">
+      {/* ── Header ── */}
+      <Header
+        lastUpdated={lastUpdated}
+        isConnected={!isError}
+        onRefresh={refresh}
+      />
+
+      {/* ── Main ── */}
+      <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl flex flex-col gap-6">
+          {/* ── Error banner ── */}
+          <AnimatePresence>
+            {isError && <ErrorBanner onRetry={refresh} />}
+          </AnimatePresence>
+
+          {/* ── Page title ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="flex flex-col gap-0.5"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <p className="font-display text-[10px] font-600 uppercase tracking-[0.35em] text-slate-600">
+              Pemantauan Real-time
+            </p>
+            <h1 className="font-display text-2xl font-800 tracking-tight text-slate-100">
+              Kondisi Suhu Cuaca{" "}
+              <span className="bg-linear-to-r from-cyan-400 to-sky-400 bg-clip-text text-transparent">
+                Tambak Garam
+              </span>
+            </h1>
+          </motion.div>
+
+          {/* ── Bento Grid ── */}
+          <motion.div
+            variants={gridVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
           >
-            Documentation
-          </a>
+            {/* ── Status Card — wide (2 cols) ── */}
+            <motion.div
+              variants={cardVariants}
+              className="sm:col-span-2 lg:col-span-2"
+            >
+              <StatusCard data={data} isLoading={isLoading} />
+            </motion.div>
+
+            {/* ── Temperature Card ── */}
+            <motion.div variants={cardVariants}>
+              <TemperatureCard
+                suhu={data?.suhu ?? null}
+                previousSuhu={previousData?.suhu ?? null}
+                isLoading={isLoading}
+              />
+            </motion.div>
+
+            {/* ── Humidity Card ── */}
+            <motion.div variants={cardVariants}>
+              <HumidityCard
+                kelembapan={data?.kelembapan ?? null}
+                previouskelembapan={previousData?.kelembapan ?? null}
+                isLoading={isLoading}
+              />
+            </motion.div>
+
+            {/* ── Analytics Card — full width ── */}
+            <motion.div
+              variants={cardVariants}
+              className="sm:col-span-2 lg:col-span-4"
+            >
+              <AnalyticsCard history={history} />
+            </motion.div>
+          </motion.div>
+
+          {/* ── Data stream info ── */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.6 }}
+            className="flex items-center justify-center gap-2 text-[11px] font-display text-slate-700"
+          >
+            <span className="h-1 w-1 rounded-full bg-cyan-500/50" />
+            <span>Data diperbarui otomatis setiap 5 detik dari Backend</span>
+            <span className="h-1 w-1 rounded-full bg-cyan-500/50" />
+          </motion.div>
         </div>
       </main>
+
+      {/* ── Footer ── */}
+      <Footer />
     </div>
   );
 }

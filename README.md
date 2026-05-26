@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌊 ERK Group — Tambak Garam IoT Dashboard
 
-## Getting Started
+Dashboard real-time berbasis **Next.js** untuk memantau kondisi cuaca tambak
+garam melalui sensor IoT. Data dikonsumsi dari backend **Go** via **Ngrok**.
 
-First, run the development server:
+---
+
+## ✨ Fitur Utama
+
+| Fitur                 | Keterangan                                 |
+| --------------------- | ------------------------------------------ |
+| **Real-time Polling** | Data diperbarui setiap 5 detik             |
+| **Bento Grid Layout** | Tata letak kartu modern & responsif        |
+| **Glassmorphism UI**  | Transparansi blur premium                  |
+| **Dark Mode**         | Tema Deep Space Oceanic                    |
+| **Circular Gauge**    | Progress arc SVG animasi untuk suhu        |
+| **Water Wave**        | Visualisasi gelombang air untuk kelembaban |
+| **Status Dinamis**    | Logika OPTIMAL / STABIL / KRITIS otomatis  |
+| **Trend Arrows**      | Indikator naik/turun antar pembacaan       |
+| **Analytics Chart**   | Bar chart 20 data terakhir (no library)    |
+| **Skeleton Loading**  | Shimmer placeholder saat pertama load      |
+| **Error Banner**      | Notifikasi koneksi gagal + retry           |
+| **Framer Motion**     | Stagger entrance + hover glow + spring     |
+
+---
+
+## 🚀 Cara Setup
+
+### 1. Install Dependencies
+
+```bash
+npm install
+# atau
+pnpm install
+```
+
+Pastikan package berikut sudah terpasang:
+
+```bash
+npm install framer-motion lucide-react
+```
+
+### 2. Konfigurasi Environment
+
+```bash
+cp .env.example .env.local
+```
+
+Edit `.env.local`:
+
+```env
+NEXT_PUBLIC_API_URL=https://abc123.ngrok-free.app/data
+```
+
+> **Tip:** Jika backend Go berjalan di port 8080 dan Ngrok di-forward ke sana,
+> URL-nya biasanya `https://xxxx.ngrok-free.app/data`.
+
+### 3. Jalankan Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🗂️ Struktur Folder
 
-## Learn More
+```
+salt-farm-dashboard/
+├── app/
+│   ├── globals.css       ← Tailwind + custom keyframes + glassmorphism
+│   ├── layout.tsx        ← Root layout + metadata
+│   └── page.tsx          ← Halaman utama — orchestrates semua komponen
+│
+├── components/
+│   ├── dashboard/
+│   │   ├── Header.tsx         ← Logo, breadcrumb, Live indicator
+│   │   ├── StatusCard.tsx     ← Status OPTIMAL / KRITIS / STABIL + animasi
+│   │   ├── TemperatureCard.tsx ← SVG circular gauge + animated counter
+│   │   ├── HumidityCard.tsx   ← Water wave + level marker + trend
+│   │   ├── AnalyticsCard.tsx  ← Bar chart 20 readings + stats row
+│   │   └── Footer.tsx         ← Copyright + tech pills + social icons
+│   └── ui/
+│       └── ErrorBanner.tsx    ← Banner koneksi gagal
+│
+├── hooks/
+│   └── useWeatherData.ts  ← Polling hook dengan history buffer
+│
+├── types/
+│   └── weather.ts         ← Interface data + getStatus() logic
+│
+├── tailwind.config.ts     ← Custom animations, fonts, glow shadows
+└── .env.example           ← Template variabel lingkungan
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📡 Format Data Backend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Hook mengharapkan response JSON dari endpoint:
 
-## Deploy on Vercel
+```json
+{
+  "suhu": 33.5,
+  "kelembaban": 45.2,
+  "timestamp": "2024-11-15T10:30:00Z"
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎨 Logika Status
+
+| Kondisi                             | Status               | Warna              |
+| ----------------------------------- | -------------------- | ------------------ |
+| `suhu >= 32` AND `kelembaban <= 50` | **OPTIMAL · PANEN**  | 🟢 Emerald         |
+| `suhu < 26` OR `kelembaban >= 75`   | **KRITIS · WASPADA** | 🔴 Rose (berkedip) |
+| Selain itu                          | **STABIL**           | 🟡 Amber           |
+
+---
+
+## 🛠️ Tech Stack
+
+- **Next.js 14+** (App Router)
+- **TypeScript**
+- **Tailwind CSS v3**
+- **Framer Motion** — animasi & spring physics
+- **Lucide React** — icon library
+- **Google Fonts** — Syne (UI) + Space Mono (angka)
+
+---
+
+© 2026 ERK Group — Tugas Akhir Matakuliah Praktikum Mikroprosesor & Antarmuka

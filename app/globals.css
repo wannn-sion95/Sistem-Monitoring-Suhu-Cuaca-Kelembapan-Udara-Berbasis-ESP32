@@ -1,26 +1,243 @@
+/* ─── Google Fonts ───────────────────────────────────────────────────────────
+   Syne        → headings / labels (distinctive, geometric, modern)
+   Space Mono  → big numeric readouts (monospaced, technical feel)
+   ─────────────────────────────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap");
+
+/* ─── Tailwind v4 ────────────────────────────────────────────────────────── */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ─── Theme Tokens (v4 replaces tailwind.config.ts extend) ──────────────── */
+@theme {
+  /* Fonts */
+  --font-display: "Syne", sans-serif;
+  --font-mono-data: "Space Mono", monospace;
+
+  /* Custom animations */
+  --animate-blink-slow: blink-slow 2.4s ease-in-out infinite;
+  --animate-float: float 3.5s ease-in-out infinite;
+  --animate-wave-scroll: wave-scroll 6s linear infinite;
+  --animate-ping-ring: ping-ring 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-shimmer: shimmer 1.8s ease-in-out infinite;
+
+  /* Glow box-shadows */
+  --shadow-glow-cyan:
+    0 0 24px rgba(6, 182, 212, 0.25), 0 0 64px rgba(6, 182, 212, 0.06);
+  --shadow-glow-rose:
+    0 0 24px rgba(244, 63, 94, 0.25), 0 0 64px rgba(244, 63, 94, 0.06);
+  --shadow-glow-orange:
+    0 0 24px rgba(249, 115, 22, 0.25), 0 0 64px rgba(249, 115, 22, 0.06);
+  --shadow-glow-emerald:
+    0 0 24px rgba(16, 185, 129, 0.25), 0 0 64px rgba(16, 185, 129, 0.06);
+  --shadow-glow-amber:
+    0 0 24px rgba(245, 158, 11, 0.25), 0 0 64px rgba(245, 158, 11, 0.06);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ─── Keyframes ──────────────────────────────────────────────────────────── */
+@keyframes blink-slow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
   }
 }
 
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes wave-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes ping-ring {
+  75%,
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ─── CSS Custom Properties (LIGHT MODE DEFAULT) ─────────────────────────── */
+:root {
+  /* Warna Background Terang (Mirip putih awan/garam) */
+  --bg-base: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --border-subtle: rgba(15, 23, 42, 0.1);
+  --border-accent: rgba(15, 23, 42, 0.2);
+  --text-primary: #0f172a; /* Slate 900 */
+
+  /* Warna Aksen (Sedikit lebih pekat biar kebaca di layar terang) */
+  --cyan: #0891b2;
+  --cyan-soft: rgba(8, 145, 178, 0.12);
+  --cyan-glow: rgba(8, 145, 178, 0.25);
+
+  --rose: #e11d48;
+  --rose-soft: rgba(225, 29, 72, 0.12);
+  --rose-glow: rgba(225, 29, 72, 0.25);
+
+  --orange: #ea580c;
+  --orange-soft: rgba(234, 88, 12, 0.12);
+  --orange-glow: rgba(234, 88, 12, 0.25);
+
+  --emerald: #059669;
+  --emerald-soft: rgba(5, 150, 105, 0.12);
+  --emerald-glow: rgba(5, 150, 105, 0.25);
+
+  --amber: #d97706;
+  --amber-soft: rgba(217, 119, 6, 0.12);
+  --amber-glow: rgba(217, 119, 6, 0.25);
+}
+
+/* ─── CSS Custom Properties (DARK MODE) ──────────────────────────────────── */
+.dark {
+  /* Warna Background Gelap Asli Lu */
+  --bg-base: #020617;
+  --bg-card: rgba(15, 23, 42, 0.65);
+  --bg-card-hover: rgba(15, 23, 42, 0.85);
+  --border-subtle: rgba(148, 163, 184, 0.08);
+  --border-accent: rgba(148, 163, 184, 0.15);
+  --text-primary: #e2e8f0; /* Slate 200 */
+
+  /* Warna Aksen Neon */
+  --cyan: #06b6d4;
+  --cyan-soft: rgba(6, 182, 212, 0.12);
+  --cyan-glow: rgba(6, 182, 212, 0.25);
+
+  --rose: #f43f5e;
+  --rose-soft: rgba(244, 63, 94, 0.12);
+  --rose-glow: rgba(244, 63, 94, 0.25);
+
+  --orange: #f97316;
+  --orange-soft: rgba(249, 115, 22, 0.12);
+  --orange-glow: rgba(249, 115, 22, 0.25);
+
+  --emerald: #10b981;
+  --emerald-soft: rgba(16, 185, 129, 0.12);
+  --emerald-glow: rgba(16, 185, 129, 0.25);
+
+  --amber: #f59e0b;
+  --amber-soft: rgba(245, 158, 11, 0.12);
+  --amber-glow: rgba(245, 158, 11, 0.25);
+}
+
+/* ─── Base Reset ─────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-display);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  background-image: radial-gradient(var(--cyan-glow) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ─── Custom Scrollbar ───────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--cyan-glow);
+  border-radius: 99px;
+}
+
+/* ─── Utility Classes ─────────────────────────────────────────────────────── */
+
+/* Font helpers (used via className in TSX) */
+.font-display {
+  font-family: var(--font-display);
+}
+.font-mono-data {
+  font-family: "Space Mono", monospace;
+}
+
+/* Glassmorphism card */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid var(--border-subtle);
+}
+.glass-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-accent);
+}
+
+/* Glow shadows */
+.glow-cyan {
+  box-shadow: var(--shadow-glow-cyan);
+}
+.glow-rose {
+  box-shadow: var(--shadow-glow-rose);
+}
+.glow-orange {
+  box-shadow: var(--shadow-glow-orange);
+}
+.glow-emerald {
+  box-shadow: var(--shadow-glow-emerald);
+}
+.glow-amber {
+  box-shadow: var(--shadow-glow-amber);
+}
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(30, 41, 59, 0.8) 25%,
+    rgba(51, 65, 85, 0.6) 50%,
+    rgba(30, 41, 59, 0.8) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+/* Named animation helpers */
+.animate-blink-slow {
+  animation: blink-slow 2.4s ease-in-out infinite;
+}
+.animate-float {
+  animation: float 3.5s ease-in-out infinite;
+}
+.animate-wave-scroll {
+  animation: wave-scroll 6s linear infinite;
+}
+.animate-ping-ring {
+  animation: ping-ring 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
