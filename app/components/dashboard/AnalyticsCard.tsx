@@ -53,7 +53,7 @@ function Bar({
       </div>
 
       {/* Dual bar column */}
-      <div className="flex items-end gap-0.5 h-24 w-full">
+      <div className="flex items-end gap-2.5 h-24 w-full">
         <motion.div
           className={`flex-1 rounded-t-sm ${isMock ? "opacity-30" : "opacity-100"}
             ${isLatest ? "ring-1 ring-orange-400/40" : ""}
@@ -175,7 +175,7 @@ export default function AnalyticsCard({ history }: AnalyticsCardProps) {
             </div>
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-slate-500">
-                Tren Sensor
+                Data Sensor
               </p>
               <p className="text-sm font-bold text-slate-200">
                 Riwayat 20 Data Terakhir
@@ -208,12 +208,12 @@ export default function AnalyticsCard({ history }: AnalyticsCardProps) {
 
         {/* Y-axis labels + chart */}
         <div className="flex gap-3">
-          <div className="flex flex-col justify-between pb-5 text-[9px] font-mono text-slate-600 text-right w-6 shrink-0">
-            <span>50</span>
-            <span>38</span>
-            <span>25</span>
-            <span>13</span>
-            <span>0</span>
+          <div className="flex flex-col justify-between pb-5 text-[9px] font-mono text-slate-600 text-right w-7 shrink-0">
+            <span>100%</span>
+            <span>75%</span>
+            <span>50%</span>
+            <span>25%</span>
+            <span>0%</span>
           </div>
 
           <div className="flex-1 flex flex-col gap-1">

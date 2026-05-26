@@ -91,10 +91,16 @@ export default function StatusCard({ data, isLoading }: StatusCardProps) {
       })
     : null;
 
+  // Logika Sinkronisasi Indikator LED Fisik Hardware
+  const ledColorText = isOptimal
+    ? "LED HIJAU AKTIF"
+    : isCritical
+      ? "LED MERAH AKTIF"
+      : "LED KUNING AKTIF";
+
   return (
     <motion.div
       layout
-      whileHover={{ scale: 1.012, y: -4 }}
       transition={{ type: "spring", stiffness: 350, damping: 28 }}
       className={`glass-card relative overflow-hidden rounded-3xl p-7
         ring-1 ${config.ringClass}
@@ -174,6 +180,17 @@ export default function StatusCard({ data, isLoading }: StatusCardProps) {
             {config.sublabel}
           </motion.p>
         </AnimatePresence>
+
+        {/* Petunjuk Sinkronisasi Hardware Lampu LED */}
+        <div
+          className={`-mt-3 flex items-center gap-1.5 text-[10px] font-bold font-display tracking-widest uppercase ${config.textClass}`}
+        >
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute h-full w-full rounded-full opacity-75 bg-current animate-ping" />
+            <span className="relative h-1.5 w-1.5 rounded-full bg-current" />
+          </span>
+          <span>Status Lampu: {ledColorText}</span>
+        </div>
 
         {/* Metric pills */}
         <div className="grid grid-cols-2 gap-3 mt-auto">

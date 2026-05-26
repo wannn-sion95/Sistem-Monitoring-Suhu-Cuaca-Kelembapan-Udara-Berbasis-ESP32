@@ -228,7 +228,6 @@ export default function TemperatureCard({
 
   return (
     <motion.div
-      whileHover={{ scale: 1.015, y: -4 }}
       transition={{ type: "spring", stiffness: 350, damping: 28 }}
       className={`glass-card relative overflow-hidden rounded-3xl p-6 ring-1 ${ringClass} ${glowClass} transition-all duration-500`}
     >
