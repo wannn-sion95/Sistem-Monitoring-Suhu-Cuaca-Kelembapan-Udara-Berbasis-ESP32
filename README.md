@@ -88,7 +88,7 @@ Dashboard real-time berbasis **Next.js** untuk memantau kondisi tambak garam men
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/username/salt-farm-dashboard.git
+git clone https://github.com/wannn-sion95/Sistem-Monitoring-Suhu-Cuaca-Kelembapan-Udara-Berbasis-ESP32.git
 ```
 
 ## 2. Install Dependencies
