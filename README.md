@@ -69,13 +69,8 @@ Dashboard real-time berbasis **Next.js** untuk memantau kondisi tambak garam men
 
 # 🖼️ Dashboard Preview
 
-```txt
-🌡️ Temperature Gauge
-💧 Water Wave Humidity
-📈 Analytics Chart
-🚨 Dynamic Status Detection
-📊 Live Monitoring Cards
-````
+<img width="1333" height="898" alt="Screenshot 2026-05-29 024512" src="https://github.com/user-attachments/assets/9fbe5e58-e8e0-4a24-b527-c6f7453cbc76" />
+
 
 > UI didesain dengan konsep:
 >
