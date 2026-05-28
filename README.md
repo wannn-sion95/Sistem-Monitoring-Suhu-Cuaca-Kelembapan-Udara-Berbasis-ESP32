@@ -10,7 +10,7 @@
 Dashboard real-time berbasis **Next.js** untuk memantau kondisi tambak garam menggunakan sensor IoT dengan tampilan modern bergaya **Glassmorphism Dashboard UI**.
 
 <img src="https://img.shields.io/badge/Next.js-14+-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" />
-<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+<img src="https://img.shields.io/badge/Go-3178C6?style=for-the-badge&logo=go&logoColor=white" />
 <img src="https://img.shields.io/badge/TailwindCSS-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white" />
 <img src="https://img.shields.io/badge/FramerMotion-EF008F?style=for-the-badge&logo=framer&logoColor=white" />
 <img src="https://img.shields.io/badge/IoT-00C896?style=for-the-badge&logo=raspberrypi&logoColor=white" />
