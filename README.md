@@ -1,5 +1,5 @@
 
-![ERK Group Banner](https://capsule-render.vercel.app/api?type=waving&color=0:0B132B,30:1C2541,60:3A506B,100:5BC0BE&height=280&section=header&text=Tambak%20Garam%20IoT&fontSize=58&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Real-Time%20Monitoring%20Dashboard%20by%20ERK%20Group&descAlignY=60&descSize=20)
+![ERK Group Banner](https://capsule-render.vercel.app/api?type=waving&color=0:0B132B,30:1C2541,60:3A506B,100:5BC0BE&height=280&section=header&text=Project%20Akhir%20&fontSize=58&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Sistem%20Monitoring%20Suhu%20Cuaca%20Berbasis%20ESP32%20by%20ERK%20Group&descAlignY=60&descSize=20)
 
 <div align="center">
 
